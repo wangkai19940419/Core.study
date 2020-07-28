@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Wk.Study.IService;
 using Wk.Study.Library.ConfigModel;
+using Wk.Study.Model;
 //using Wk.Study.Model.Models;
 //using Wk.Study.Service.ProfileMapping;
 using Wk.Study.Service.Services;
@@ -72,8 +73,8 @@ namespace Wk.Study.Web
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-          // services.AddDbContext<wkstudyContext>(options =>
-             //         options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+          services.AddDbContext<AppDbContext>(options =>
+                     options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
             services.AddControllers(t=> {
                 //t.Filters.Add(new WkExceptionFilter());
                 t.Filters.Add(new WkActionFilter());
