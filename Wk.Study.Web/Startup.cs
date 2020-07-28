@@ -21,8 +21,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Wk.Study.IService;
 using Wk.Study.Library.ConfigModel;
-using Wk.Study.Model.Models;
-using Wk.Study.Service.ProfileMapping;
+//using Wk.Study.Model.Models;
+//using Wk.Study.Service.ProfileMapping;
 using Wk.Study.Service.Services;
 using Wk.Study.Web.filter;
 using Wk.Study.Web.Utils;
@@ -43,9 +43,7 @@ namespace Wk.Study.Web
         {
             services.AddHttpClient();
 
-            var mapperConfig = new MapperConfiguration(e => e.AddProfile(new MappingProfile()));
-            var mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
+           
 
             //services.AddAutoMapper(Assembly.GetExecutingAssembly());
             var jwtSetting = new JwtSetting();
@@ -74,8 +72,8 @@ namespace Wk.Study.Web
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
-            services.AddDbContext<wkstudyContext>(options =>
-                      options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
+          // services.AddDbContext<wkstudyContext>(options =>
+             //         options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection")));
             services.AddControllers(t=> {
                 //t.Filters.Add(new WkExceptionFilter());
                 t.Filters.Add(new WkActionFilter());
@@ -86,41 +84,15 @@ namespace Wk.Study.Web
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            //一个接口多个实现
-            //1、需要指定键值 是一个Object类型
-            // 2、注册服务使用方法Keyed  参数为指定的键值中的值 （每一个服务的实现和键值要一一对应起来，这里不能重复）
-            // 3、获取服务： 直接通过ResolveKeyed() 获取服务无，方法需要传入 指定对应的键值
-            //       先获取一个IIndex，再通过IInex 索引来获取服务的实例
-            //            builder.RegisterType<TestServiceD>().Keyed<ITestServiceD>(DeviceState.TestServiceD);
-            //            builder.RegisterType<TestServiceD_One>().Keyed<ITestServiceD>(DeviceState.TestServiceD_One);
-            //            builder.RegisterType<TestServiceD_Two>().Keyed<ITestServiceD>(DeviceState.TestServiceD_Two);
-            //            builder.RegisterType<TestServiceD_Three>().Keyed<ITestServiceD>(DeviceState.TestServiceD_Three);
-
-            // 为不同的实现指定名称，这个比较简单，推荐
-
-            //containerBuilder.RegisterType<TestServiceD_Three>().Named<ITestServiceD>("three");
-
-
-            // IIndex<DeviceState, ITestServiceD> index = container.Resolve<IIndex<DeviceState, ITestServiceD>>();
-
-            //ITestServiceD testServiceD = index[DeviceState.TestServiceD];
-            //ITestServiceD TestServiceD_One = index[DeviceState.TestServiceD_One];
-            //ITestServiceD TestServiceD_Two = index[DeviceState.TestServiceD_Two];
-            //ITestServiceD TestServiceD_Three = index[DeviceState.TestServiceD_Three];
-
-            // 根据名称解析
-            //var t2 = container.ResolveNamed<ITestServiceD>("three");
-
-            //IContainer container = containerBuilder.Build();
+          
             builder.RegisterType<JwtService>();
-            builder.RegisterType<WkInterceptor>(); // 要先注册拦截器
-            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
+            builder.RegisterType<WkInterceptor>(); // 要锟斤拷注锟斤拷锟斤拷锟斤拷锟斤拷
+//            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             var controllerBaseType = typeof(ControllerBase);
             builder.RegisterAssemblyTypes(typeof(Program).Assembly)
                 .Where(t => controllerBaseType.IsAssignableFrom(t) && t != controllerBaseType)
                 .PropertiesAutowired()
-                .EnableClassInterceptors(); // 允许在Controller类上使用拦截器
-                                            //[Intercept(typeof(TestInterceptor))] 在需要使用拦截器的类或接口上添加描述
+                .EnableClassInterceptors(); 
 
        
         }
@@ -132,14 +104,9 @@ namespace Wk.Study.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            //    app.UseHsts();
-            //}
+          
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            
             app.UseAuthentication();
             app.UseRouting();
 

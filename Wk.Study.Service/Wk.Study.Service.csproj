@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Wk.Study.Model\Wk.Study.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ProfileMapping" />
+  </ItemGroup>
+
 </Project>

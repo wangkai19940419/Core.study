@@ -6,7 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Wk.Study.Library.ConfigModel;
-using Wk.Study.Model.Models;
+//using Wk.Study.Model.Models;
 
 namespace Wk.Study.Service.Services
 {
@@ -17,7 +17,7 @@ namespace Wk.Study.Service.Services
         {
             this.jwtSetting = jwtSetting.Value;
         }
-        public string GetToken(SysUser user)
+        /*public string GetToken(SysUser user)
         {
             //创建用户身份标识，可按需要添加更多信息
             var claims = new Claim[]
@@ -43,6 +43,6 @@ namespace Wk.Study.Service.Services
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwtToken;
-        }
+        }*/
     }
 }
